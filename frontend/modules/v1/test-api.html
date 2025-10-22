@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VZ Account API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .get { background: #28a745; color: white; }
+        .post { background: #007bff; color: white; }
+        .url {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success { border-left: 4px solid #28a745; }
+        .error { border-left: 4px solid #dc3545; }
+        .info { border-left: 4px solid #17a2b8; }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 VZ Account API Test</h1>
+    
+    <div class="container">
+        <h2>📊 Estadísticas</h2>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/v1/vz-account/stats</span>
+            <button onclick="getStats()">Obtener Estadísticas</button>
+        </div>
+        <div id="statsResult" class="result" style="display: none;"></div>
+        <div id="statsGrid" class="stats-grid"></div>
+    </div>
+
+    <div class="container">
+        <h2>🎯 Obtener Cuenta</h2>
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/v1/vz-account/claim</span>
+            <button onclick="claimAccount()">Obtener Cuenta</button>
+        </div>
+        <div id="claimResult" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="container">
+        <h2>✏️ Actualizar Estatus</h2>
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/v1/vz-account/update-status</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="accountId">Account ID:</label>
+            <input type="number" id="accountId" placeholder="ID de la cuenta">
+        </div>
+        
+        <div class="form-group">
+            <label for="status">Nuevo Estatus:</label>
+            <select id="status">
+                <option value="">Seleccionar estatus</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="trabajando">Trabajando</option>
+                <option value="hit">Hit</option>
+                <option value="failed">Failed</option>
+            </select>
+        </div>
+        
+        <button onclick="updateStatus()">Actualizar Estatus</button>
+        <div id="updateResult" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="container">
+        <h2>🔄 Prueba Completa</h2>
+        <p>Ejecuta una secuencia completa: obtener cuenta → actualizar a hit → obtener estadísticas</p>
+        <button onclick="runCompleteTest()">Ejecutar Prueba Completa</button>
+        <div id="completeResult" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const API_BASE = '/v1/vz-account';
+        
+        function showResult(elementId, data, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.className = `result ${type}`;
+            element.textContent = JSON.stringify(data, null, 2);
+        }
+        
+        async function getStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('statsResult', data, 'success');
+                    displayStatsGrid(data.data);
+                } else {
+                    showResult('statsResult', data, 'error');
+                }
+            } catch (error) {
+                showResult('statsResult', { error: error.message }, 'error');
+            }
+        }
+        
+        function displayStatsGrid(stats) {
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = '';
+            
+            // Total
+            const totalCard = document.createElement('div');
+            totalCard.className = 'stat-card';
+            totalCard.innerHTML = `
+                <div class="stat-number">${stats.total}</div>
+                <div class="stat-label">Total Cuentas</div>
+            `;
+            grid.appendChild(totalCard);
+            
+            // Sin estatus
+            const withoutCard = document.createElement('div');
+            withoutCard.className = 'stat-card';
+            withoutCard.innerHTML = `
+                <div class="stat-number">${stats.without_status}</div>
+                <div class="stat-label">Sin Estatus</div>
+            `;
+            grid.appendChild(withoutCard);
+            
+            // Con estatus
+            const withCard = document.createElement('div');
+            withCard.className = 'stat-card';
+            withCard.innerHTML = `
+                <div class="stat-number">${stats.with_status}</div>
+                <div class="stat-label">Con Estatus</div>
+            `;
+            grid.appendChild(withCard);
+            
+            // En proceso
+            const processCard = document.createElement('div');
+            processCard.className = 'stat-card';
+            processCard.innerHTML = `
+                <div class="stat-number">${stats.in_process}</div>
+                <div class="stat-label">En Proceso</div>
+            `;
+            grid.appendChild(processCard);
+            
+            // Estatus específicos
+            Object.keys(stats).forEach(key => {
+                if (key !== 'total' && key !== 'with_status' && key !== 'without_status' && key !== 'in_process') {
+                    const stat = stats[key];
+                    const card = document.createElement('div');
+                    card.className = 'stat-card';
+                    card.innerHTML = `
+                        <div class="stat-number">${stat.count}</div>
+                        <div class="stat-label">${stat.option.text}</div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        }
+        
+        async function claimAccount() {
+            try {
+                const response = await fetch(`${API_BASE}/claim`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('claimResult', data, 'success');
+                    // Auto-fill account ID for update
+                    document.getElementById('accountId').value = data.data.id;
+                } else {
+                    showResult('claimResult', data, 'error');
+                }
+            } catch (error) {
+                showResult('claimResult', { error: error.message }, 'error');
+            }
+        }
+        
+        async function updateStatus() {
+            const accountId = document.getElementById('accountId').value;
+            const status = document.getElementById('status').value;
+            
+            if (!accountId || !status) {
+                showResult('updateResult', { error: 'Account ID y Status son requeridos' }, 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/update-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        account_id: parseInt(accountId),
+                        status: status
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('updateResult', data, 'success');
+                } else {
+                    showResult('updateResult', data, 'error');
+                }
+            } catch (error) {
+                showResult('updateResult', { error: error.message }, 'error');
+            }
+        }
+        
+        async function runCompleteTest() {
+            const resultDiv = document.getElementById('completeResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result info';
+            resultDiv.textContent = 'Ejecutando prueba completa...\n';
+            
+            try {
+                // 1. Obtener estadísticas iniciales
+                resultDiv.textContent += '1. Obteniendo estadísticas iniciales...\n';
+                const statsResponse = await fetch(`${API_BASE}/stats`);
+                const statsData = await statsResponse.json();
+                resultDiv.textContent += `   ✅ Estadísticas: ${JSON.stringify(statsData, null, 2)}\n\n`;
+                
+                // 2. Obtener cuenta
+                resultDiv.textContent += '2. Obteniendo cuenta...\n';
+                const claimResponse = await fetch(`${API_BASE}/claim`);
+                const claimData = await claimResponse.json();
+                
+                if (!claimData.success) {
+                    resultDiv.textContent += `   ❌ Error: ${claimData.message}\n`;
+                    resultDiv.className = 'result error';
+                    return;
+                }
+                
+                resultDiv.textContent += `   ✅ Cuenta obtenida: ID ${claimData.data.id}\n`;
+                resultDiv.textContent += `   📧 Email: ${claimData.data.email}\n`;
+                resultDiv.textContent += `   📱 Phone: ${claimData.data.phone}\n\n`;
+                
+                // 3. Actualizar a hit
+                resultDiv.textContent += '3. Actualizando estatus a "hit"...\n';
+                const updateResponse = await fetch(`${API_BASE}/update-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        account_id: claimData.data.id,
+                        status: 'hit'
+                    })
+                });
+                
+                const updateData = await updateResponse.json();
+                
+                if (!updateData.success) {
+                    resultDiv.textContent += `   ❌ Error: ${updateData.message}\n`;
+                    resultDiv.className = 'result error';
+                    return;
+                }
+                
+                resultDiv.textContent += `   ✅ Estatus actualizado a: ${updateData.data.depurador_no_pin_status}\n\n`;
+                
+                // 4. Obtener estadísticas finales
+                resultDiv.textContent += '4. Obteniendo estadísticas finales...\n';
+                const finalStatsResponse = await fetch(`${API_BASE}/stats`);
+                const finalStatsData = await finalStatsResponse.json();
+                resultDiv.textContent += `   ✅ Estadísticas finales: ${JSON.stringify(finalStatsData, null, 2)}\n\n`;
+                
+                resultDiv.textContent += '🎉 Prueba completa exitosa!\n';
+                resultDiv.className = 'result success';
+                
+            } catch (error) {
+                resultDiv.textContent += `❌ Error en la prueba: ${error.message}\n`;
+                resultDiv.className = 'result error';
+            }
+        }
+        
+        // Auto-load stats on page load
+        window.onload = function() {
+            getStats();
+        };
+    </script>
+</body>
+</html>
