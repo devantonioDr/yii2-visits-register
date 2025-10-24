@@ -424,6 +424,22 @@ class AnalyticsDashboardController extends Controller
         $toDate = $dateRange['to'];
 
         $data = Event::find()
+            ->select([
+                'id',
+                'type',
+                'page',
+                'cta_id',
+                'referrer',
+                'device',
+                'country_iso2',
+                'region',
+                'city',
+                'visit_id',
+                'ip_hash',
+                'ua_hash',
+                'ts',
+                'created_at'
+            ])
             ->where(['>=', 'ts', $fromDate . ' 00:00:00'])
             ->andWhere(['<=', 'ts', $toDate . ' 23:59:59'])
             ->orderBy(['ts' => SORT_DESC])
