@@ -21,11 +21,12 @@ class EventController extends BaseController
     {
         $behaviors = parent::behaviors();
         
-        // Allow only POST for event creation
+        // Allow POST and OPTIONS (for CORS preflight)
         $behaviors['verbFilter'] = [
             'class' => \yii\filters\VerbFilter::class,
             'actions' => [
-                'track' => ['POST'],
+                'track' => ['POST', 'OPTIONS'],
+                'stats' => ['GET', 'OPTIONS'],
             ],
         ];
         
@@ -64,8 +65,14 @@ class EventController extends BaseController
     {
         $request = Yii::$app->request;
         
-        // Get JSON payload
-        $data = $request->getBodyParams();
+        // Get JSON payload from raw input
+        $rawBody = $request->getRawBody();
+        $data = json_decode($rawBody, true);
+        
+        // Check if JSON decoding failed
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException('Invalid JSON: ' . json_last_error_msg());
+        }
         
         // Validate required fields
         if (empty($data['url'])) {

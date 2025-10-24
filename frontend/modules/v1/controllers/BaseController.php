@@ -25,17 +25,21 @@ class BaseController extends Controller
         // Remove authentication requirement
         unset($behaviors['authenticator']);
         
-        // Add CORS support
-        $behaviors['cors'] = [
-            'class' => Cors::class,
-            'cors' => [
-                'Origin' => ['*'],
-                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-                'Access-Control-Request-Headers' => ['*'],
-                'Access-Control-Allow-Credentials' => false,
-                'Access-Control-Max-Age' => 86400,
+        // CORS filter must be the first behavior to run
+        // This ensures preflight OPTIONS requests are handled correctly
+        $behaviors = array_merge([
+            'corsFilter' => [
+                'class' => Cors::class,
+                'cors' => [
+                    'Origin' => ['*'],
+                    'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Allow-Credentials' => false,
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Expose-Headers' => [],
+                ],
             ],
-        ];
+        ], $behaviors);
         
         // Add content negotiator for JSON responses
         $behaviors['contentNegotiator'] = [
@@ -46,5 +50,14 @@ class BaseController extends Controller
         ];
         
         return $behaviors;
+    }
+    
+    /**
+     * Handle OPTIONS preflight requests
+     * @return array
+     */
+    public function actionOptions()
+    {
+        return [];
     }
 }

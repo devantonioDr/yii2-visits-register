@@ -16,6 +16,14 @@ class Api extends \yii\base\Module
     public function init()
     {
         parent::init();
+        
+        // Disable session for API
         \Yii::$app->user->enableSession = false;
+        
+        // Disable CSRF validation for API requests
+        \Yii::$app->request->enableCsrfValidation = false;
+        
+        // Set response format to JSON
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     }
 }

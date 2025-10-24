@@ -45,7 +45,12 @@ return [
     'urlManager' => [
       'enablePrettyUrl' => true,
       'showScriptName' => false,
-      'rules' => [],
+      'rules' => [
+        // API v1 routes
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'v1/event', 'pluralize' => false],
+        'v1/event/track' => 'v1/event/track',
+        'v1/event/stats' => 'v1/event/stats',
+      ],
     ],
 
   ],
