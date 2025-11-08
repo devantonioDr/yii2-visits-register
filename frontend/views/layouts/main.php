@@ -205,7 +205,7 @@ $this->params['analytics_config'] = $analytics_config;
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <!-- Analytics Tracking Module -->
-    <script src="<?= Url::to('@web/tracking.js') ?>"></script>
+    <script src="<?= Url::to('@web/js/tracking.js') ?>"></script>
     
     <!-- Initialize AOS and Smooth Scroll -->
     <script>
