@@ -54,5 +54,6 @@ return [
     ],
 
   ],
+  'homeUrl' => '/site/index',
   'params' => $params,
 ];

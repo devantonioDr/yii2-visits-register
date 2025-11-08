@@ -57,5 +57,6 @@ return [
             ],
         ],
     ],
+    'homeUrl' => '/analytics-dashboard/index',
     'params' => $params,
 ];

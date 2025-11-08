@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use frontend\assets\AnalyticsDashboardAsset;
+use backend\assets\AnalyticsDashboardAsset;
 
 /* @var $this yii\web\View */
 /* @var $kpis array */
@@ -35,12 +35,6 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js');
                             <i class="fa fa-calendar"></i> Date Range Filter
                         </h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-info btn-sm" id="quick-chart-data">
-                                <i class="fa fa-magic"></i> Quick Data
-                            </button>
-                            <?= Html::a('<i class="fa fa-database"></i> Event Feeder', 
-                                ['/event-feeder/index'], 
-                                ['class' => 'btn btn-warning btn-sm']) ?>
                             <?= Html::a('<i class="fa fa-download"></i> Export CSV', 
                                 ['export', 'from' => $fromDate, 'to' => $toDate], 
                                 ['class' => 'btn btn-success btn-sm']) ?>
@@ -583,44 +577,6 @@ if (" . $trendData . ".length > 0) {
 }
 
 console.log('Device Data:', " . $deviceData . ");
-
-// Quick chart data generation
-$('#quick-chart-data').click(function() {
-    var btn = $(this);
-    var originalText = btn.html();
-    
-    btn.html('<i class=\"fa fa-spinner fa-spin\"></i> Generating...');
-    btn.prop('disabled', true);
-    
-    $.ajax({
-        url: '" . Url::to(['/event-feeder/quick-chart-data']) . "',
-        type: 'POST',
-        dataType: 'json',
-        success: function(response) {
-            if (response.success) {
-                // Show success message
-                $('<div class=\"alert alert-success alert-dismissible\" style=\"margin-top: 10px;\">' +
-                  '<button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>' +
-                  '<i class=\"fa fa-check\"></i> ' + response.message +
-                  '</div>').insertAfter('#quick-chart-data').delay(3000).fadeOut();
-                
-                // Reload page to show new data
-                setTimeout(function() {
-                    window.location.reload();
-                }, 1000);
-            } else {
-                alert('Error: ' + response.message);
-            }
-        },
-        error: function() {
-            alert('Failed to generate chart data');
-        },
-        complete: function() {
-            btn.html(originalText);
-            btn.prop('disabled', false);
-        }
-    });
-});
 ");
 
 $this->registerJs("
@@ -788,3 +744,4 @@ new Chart(deviceCtx, {
 });
 ");
 ?>
+

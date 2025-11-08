@@ -117,4 +117,36 @@ class MyHelpers
             return false;
         }
     }
+
+    /**
+     * Escape HTML output
+     * 
+     * @param string $string
+     * @return string
+     */
+    public static function e($string)
+    {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * Get CSS color variables - Material Design 3 System
+     * 
+     * @param array $colors
+     * @return string
+     */
+    public static function getCSSColors($colors)
+    {
+        $css = ":root {\n";
+
+        // Convert all color tokens to CSS variables
+        foreach ($colors as $key => $value) {
+            $cssVar = '--md-' . $key;
+            $css .= "        {$cssVar}: {$value};\n";
+        }
+
+        $css .= "    }";
+
+        return $css;
+    }
 }

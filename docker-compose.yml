@@ -12,6 +12,16 @@ services:
       # Mount source-code for development
       - ./:/app
 
+  backend:
+    build: backend
+    ports:
+      - 20081:80
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+
   mysql:
     image: mysql:8.0
     ports:

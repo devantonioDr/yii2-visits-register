@@ -6,7 +6,7 @@ use dmstr\widgets\Alert;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-frontend\assets\AppAsset::register($this);
+backend\assets\AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,16 +27,16 @@ frontend\assets\AppAsset::register($this);
 <?= Alert::widget() ?>
 
     <div class="login-logo">
-        <a href="<?php echo Yii::$app->homeUrl; ?>"><b><?=Yii::$app->params['appName'];?></b> - 0.1</a>
-        
+        <a href="<?php echo Yii::$app->homeUrl; ?>"><b><?= Yii::$app->params['appName']; ?></b></a>
     </div>
     <!-- /.login-logo -->
 
     <?= $content ?>
 
- </div><!-- /.login-box -->
+</div><!-- /.login-box -->
 
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+

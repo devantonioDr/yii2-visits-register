@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use common\models\Event;
 use Yii;
@@ -364,3 +364,4 @@ class EventFeederController extends Controller
         );
     }
 }
+

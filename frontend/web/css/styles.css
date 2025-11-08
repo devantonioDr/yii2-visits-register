@@ -1,0 +1,966 @@
+/* ========================================
+   Variables CSS - Material Design 3 System
+   ======================================== */
+:root {
+  /* Material Design 3 colors are injected dynamically from PHP */
+  /* See config.php getCSSColors() function */
+
+  /* Tipografía */
+  --font-primary: "Montserrat", sans-serif;
+  --font-heading: "Playfair Display", serif;
+
+  /* Espaciado */
+  --section-padding: 100px;
+  --section-padding-mobile: 60px;
+
+  /* Elevaciones (Material Design 3) */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --elevation-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --elevation-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  --elevation-4: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+  --elevation-5: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+  /* Border Radius (Material Design 3) */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transiciones */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   Reset y Base
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--md-on-background);
+  background-color: var(--md-background);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ========================================
+   Hero Section
+   ======================================== */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-video,
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(26, 26, 26, 0.7)
+  );
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  color: var(--md-surface);
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* Hero Title Image */
+.hero-title-image {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-heading-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  display: block;
+  margin: 0 auto;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+  opacity: 0.95;
+  letter-spacing: 1px;
+}
+
+/* Hero Buttons Container */
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* Call to Action Button - Material Design 3 Filled Button */
+.btn-cta {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  padding: 18px 45px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 280px;
+  box-shadow: var(--elevation-1);
+}
+
+.btn-cta:hover {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-3);
+  filter: brightness(1.1);
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: var(--elevation-1);
+}
+
+.btn-cta i {
+  transition: transform var(--transition-fast);
+}
+
+.btn-cta:hover i {
+  transform: translateX(5px);
+}
+
+/* Secondary CTA Button - Material Design 3 Outlined Button */
+.btn-cta-secondary {
+  background-color: transparent;
+  color: var(--md-on-primary);
+  padding: 18px 45px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 2px solid var(--md-outline-variant);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 280px;
+}
+
+.btn-cta-secondary:hover {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  border-color: var(--md-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-2);
+}
+
+.btn-cta-secondary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-cta-secondary i {
+  transition: transform var(--transition-fast);
+}
+
+.btn-cta-secondary:hover i {
+  transform: translateX(5px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.scroll-link {
+  color: var(--md-surface);
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-link:hover {
+  opacity: 1;
+  color: var(--md-primary);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* ========================================
+   Portfolio Section
+   ======================================== */
+.portfolio-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--md-surface);
+}
+
+.portfolio-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--md-on-surface);
+  letter-spacing: 3px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.portfolio-description {
+  font-size: 1.1rem;
+  color: var(--md-on-surface-variant);
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+/* Portfolio Gallery Grid */
+.portfolio-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-2);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  background-color: var(--md-surface);
+}
+
+.portfolio-item:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--elevation-4);
+}
+
+.portfolio-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.portfolio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.portfolio-item:hover .portfolio-image {
+  transform: scale(1.1);
+}
+
+.portfolio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-title-overlay {
+  color: var(--md-surface);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+
+.portfolio-item:hover .portfolio-title-overlay {
+  transform: translateY(0);
+}
+
+/* ========================================
+   About Section
+   ======================================== */
+.about-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--md-background);
+}
+
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-wrapper img {
+  position: relative;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+.about-decoration {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--md-primary);
+  z-index: 1;
+  border-radius: var(--radius-lg);
+}
+
+.section-badge {
+  display: inline-block;
+  color: var(--md-primary);
+  background-color: var(--md-primary-container);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--md-on-surface);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.section-text {
+  font-size: 1.1rem;
+  color: var(--md-on-surface-variant);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.about-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.feature-item i {
+  font-size: 1.2rem;
+}
+
+.text-accent {
+  color: var(--md-primary);
+}
+
+/* ========================================
+   Services Preview
+   ======================================== */
+.services-preview {
+  padding: var(--section-padding) 0;
+  background-color: var(--md-background);
+}
+
+.service-card {
+  background: var(--md-surface);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+  height: 100%;
+  border: 1px solid var(--md-outline-variant);
+  box-shadow: var(--elevation-1);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--elevation-3);
+  border-color: var(--md-primary);
+  background-color: var(--md-surface);
+}
+
+.service-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-size: 2rem;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-normal);
+  box-shadow: var(--elevation-1);
+}
+
+.service-card:hover .service-icon {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  transform: scale(1.1);
+  box-shadow: var(--elevation-2);
+}
+
+.service-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+  margin-bottom: 1rem;
+}
+
+.service-description {
+  color: var(--md-on-surface-variant);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+.footer {
+  background-color: var(--md-inverse-surface);
+  color: var(--md-inverse-on-surface);
+  padding: 60px 0 30px;
+}
+
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--md-inverse-primary);
+}
+
+/* Footer Brand Logo */
+.footer-brand-logo {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footer-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--md-inverse-on-surface);
+}
+
+.footer-contact {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-contact i {
+  color: var(--md-inverse-primary);
+  margin-top: 3px;
+  font-size: 1rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--md-surface-variant);
+  color: var(--md-on-surface-variant);
+  font-size: 1.2rem;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  box-shadow: var(--elevation-1);
+}
+
+.social-link:hover {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--elevation-2);
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+.footer-copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 991px) {
+  :root {
+    --section-padding: 80px;
+  }
+
+  .about-decoration {
+    top: -15px;
+    left: -15px;
+  }
+
+  .about-section .col-lg-6:first-child {
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --section-padding: var(--section-padding-mobile);
+    }
+    
+    .hero-section {
+        height: 100vh;
+        min-height: 500px;
+        padding: 0 15px;
+    }
+    
+    .hero-content {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-heading-img {
+        max-width: 85% !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .btn-cta {
+        padding: 15px 35px;
+        font-size: 0.9rem;
+        min-width: 240px;
+    }
+    
+    .btn-cta-secondary {
+        padding: 15px 35px;
+        font-size: 0.9rem;
+        min-width: 240px;
+    }
+    
+    .hero-buttons {
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    /* Portfolio Section Mobile */
+    .portfolio-section {
+        padding: 3rem 0 !important;
+    }
+    
+    .portfolio-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .portfolio-image-wrapper {
+        height: 350px;
+    }
+    
+    .portfolio-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .portfolio-description {
+        font-size: 1rem;
+        padding: 0 15px;
+        margin-bottom: 2rem;
+    }
+    
+    /* About Section Mobile */
+    .about-section {
+        padding: 3rem 0 !important;
+    }
+    
+    .about-decoration {
+        display: none;
+    }
+    
+    .about-image-wrapper {
+        margin-bottom: 2rem;
+    }
+    
+    .about-content {
+        padding: 0 15px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .section-text {
+        font-size: 1rem;
+    }
+    
+    /* Services Section Mobile */
+    .services-preview {
+        padding: 3rem 0 !important;
+    }
+    
+    .service-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    /* Footer Mobile */
+    .footer {
+        padding: 40px 0 20px;
+    }
+    
+    .footer-logo-img {
+        max-width: 180px !important;
+    }
+    
+    .social-links {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Hero Section */
+    .hero-section {
+        min-height: 600px;
+        padding: 0 10px;
+    }
+    
+    .hero-content {
+        padding: 0 10px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-heading-img {
+        max-width: 90% !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        padding: 0 10px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+    
+    .btn-cta,
+    .btn-cta-secondary {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        padding: 14px 28px;
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+    }
+    
+    /* Portfolio Section */
+    .portfolio-section {
+        padding: 2.5rem 0 !important;
+    }
+    
+    .portfolio-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+    }
+    
+    .portfolio-image-wrapper {
+        height: 280px;
+    }
+    
+    .portfolio-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+        margin-bottom: 0.75rem;
+    }
+    
+    .portfolio-description {
+        font-size: 0.95rem;
+        padding: 0 10px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .portfolio-title-overlay {
+        font-size: 1.1rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .section-badge {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+    }
+    
+    /* About Section */
+    .about-section {
+        padding: 2.5rem 0 !important;
+    }
+    
+    .about-content {
+        padding: 0 10px;
+    }
+    
+    .about-image-wrapper {
+        margin-bottom: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .section-text {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .about-features {
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-item {
+        font-size: 0.9rem;
+    }
+    
+    /* Services Section */
+    .services-preview {
+        padding: 2.5rem 0 !important;
+    }
+    
+    .service-card {
+        padding: 1.75rem 1.25rem;
+    }
+    
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .service-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .service-description {
+        font-size: 0.9rem;
+    }
+    
+    /* Footer */
+    .footer {
+        padding: 30px 0 15px;
+    }
+    
+    .footer-logo-img {
+        max-width: 150px !important;
+        margin-bottom: 0.75rem;
+    }
+    
+    .footer-brand {
+        font-size: 1.5rem;
+    }
+    
+    .footer-text {
+        font-size: 0.9rem;
+    }
+    
+    .footer-heading {
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .footer-contact li {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+        bottom: 20px;
+    }
+    
+    .scroll-link {
+        font-size: 1.5rem;
+    }
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+.bg-light {
+  background-color: var(--md-background) !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Animaciones suaves al cargar */
+[data-aos] {
+  pointer-events: none;
+}
+
+[data-aos].aos-animate {
+  pointer-events: auto;
+}
+
+/* ========================================
+   Clases para cambio de media type
+   ======================================== */
+.hero-video.d-none,
+.hero-image.d-none {
+  display: none !important;
+}
+
+.hero-video:not(.d-none),
+.hero-image:not(.d-none) {
+  display: block !important;
+}

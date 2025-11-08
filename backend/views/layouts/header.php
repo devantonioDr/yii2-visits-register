@@ -1,15 +1,14 @@
 <?php
 
-use common\components\MyHelpers;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
-/* @var $content string */
+/* @var $directoryAsset string */
 ?>
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">CRM</span><span class="logo-lg">' . Yii::$app->params['appName']. '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">ADM</span><span class="logo-lg">' . Yii::$app->params['appName'] . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -17,52 +16,28 @@ use yii\helpers\Html;
             <span class="sr-only">Toggle navigation</span>
         </a>
       
-        <h4 class="alcaldeTitle"><?=""?></h4>
-      
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
+                <?php if (!Yii::$app->user->isGuest): ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= Yii::getAlias('@web').'/images/nophoto.jpg';?>" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs"><?=Yii::$app->user->identity->username; ?> </span>
+                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->username; ?> </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-
-                            <img src="<?= Yii::getAlias('@web').'/images/nophoto.jpg';?>" class="img-circle"
-                                 alt="User Image"/>
-
+                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
                             <p>
                                 <?= Yii::$app->user->identity->username; ?>
-
-                                <small><?=date('d/m/Y',Yii::$app->user->identity->created_at); ?> </small>
+                                <?php if (Yii::$app->user->identity->created_at): ?>
+                                    <small><?= date('d/m/Y', Yii::$app->user->identity->created_at); ?> </small>
+                                <?php endif; ?>
                             </p>
-                        </li>
-                        <!-- Menu Body -->
-                        <li class="user-body">
-                            <div class="col-xs-12 text-center">
-                                <?= Html::a(
-                                    'Archivos Generados',
-                                    ['/files-system-reports/index'],
-                                    ['class' => 'btn btn-default btn-flat']
-                                ) ?>
-                            </div>
-
-
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <?= Html::a(
-                                    'Perfil',
-                                    ['/user/update', 'id'=>Yii::$app->user->identity->id],
-                                    ['class' => 'btn btn-default btn-flat']
-                                ) ?>
-
-
-                            </div>
                             <div class="pull-right">
                                 <?= Html::a(
                                     'Sign out',
@@ -73,11 +48,10 @@ use yii\helpers\Html;
                         </li>
                     </ul>
                 </li>
-
+                <?php endif; ?>
             </ul>
         </div>
     </nav>
-
 
 </header>
 <style>
@@ -93,3 +67,4 @@ use yii\helpers\Html;
     background-color: #222d32 !important;
   }
 </style>
+

@@ -23,4 +23,22 @@ return [
     'user.passwordMinLength' => 8,
     'appName' => "CTA Tracker",
     'eventSalt' => 'change-this-salt-in-production-' . date('Y-m-d'),
+    
+    // Analytics Configuration
+    'analytics' => [
+        'enabled' => true,
+        'api_endpoint' => 'https://backoffice.familiacuts.com/v1/event/track',
+        'debug_mode' => true,
+        'track_page_views' => true,
+        'track_cta_clicks' => true,
+        'track_scroll_depth' => false,
+        'track_time_on_page' => false,
+        'cta_buttons' => [
+            'cta-hero-main',
+            'cta-hero-portfolio',
+            'cta-portfolio-section',
+            'cta-about-section',
+            'cta-services-section'
+        ]
+    ],
 ];

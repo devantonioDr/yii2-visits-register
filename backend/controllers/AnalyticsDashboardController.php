@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use common\models\Event;
 use Yii;
@@ -576,3 +576,4 @@ class AnalyticsDashboardController extends Controller
         return $this->calculatePercentageChange($previousValue, $currentValue);
     }
 }
+

@@ -58,3 +58,38 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+CONFIGURATION
+-------------
+
+### Analytics Configuration
+
+Analytics configuration is managed through Yii2 parameters. Default values are defined in `common/config/params.php` and can be overridden in `common/config/params-local.php` for local environment-specific settings.
+
+**Available settings:**
+
+- `enabled` - Enable or disable analytics tracking (default: `true`)
+- `api_endpoint` - Analytics API endpoint URL (default: `https://backoffice.familiacuts.com/v1/event/track`)
+- `debug_mode` - Enable debug mode for detailed console logs (default: `true`)
+- `track_page_views` - Track page views (default: `true`)
+- `track_cta_clicks` - Track CTA button clicks (default: `true`)
+- `track_scroll_depth` - Track scroll depth (future feature, default: `false`)
+- `track_time_on_page` - Track time on page (future feature, default: `false`)
+
+**Example override in `common/config/params-local.php`:**
+
+```php
+return [
+    'analytics' => [
+        'enabled' => false,
+        'api_endpoint' => 'http://localhost:20080/v1/event/track',
+        'debug_mode' => true,
+        'track_page_views' => true,
+        'track_cta_clicks' => true,
+        'track_scroll_depth' => false,
+        'track_time_on_page' => false,
+    ],
+];
+```
+
+**Note:** Values in `params-local.php` override defaults from `params.php`. The `params-local.php` file is typically not committed to version control, making it perfect for local development settings.

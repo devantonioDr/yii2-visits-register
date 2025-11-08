@@ -57,12 +57,13 @@ class SiteController extends Controller
 
     /**
      * Displays homepage.
+     * Redirects to Analytics Dashboard
      *
-     * @return string
+     * @return Response
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['/analytics-dashboard/index']);
     }
 
     /**
@@ -76,11 +77,11 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $this->layout = 'blank';
+        $this->layout = 'main-login';
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(['/analytics-dashboard/index']);
         }
 
         $model->password = '';

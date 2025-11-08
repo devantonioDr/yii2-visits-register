@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\assets\AnalyticsDashboardAsset;
+use backend\assets\AnalyticsDashboardAsset;
 
 /* @var $this yii\web\View */
 
@@ -422,3 +422,4 @@ function showError(message) {
 }
 ");
 ?>
+
