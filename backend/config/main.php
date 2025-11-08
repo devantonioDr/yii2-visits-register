@@ -10,6 +10,11 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    'modules' => [
+      'v1' => [
+        'class' => 'backend\modules\v1\Api',
+      ]
+    ],
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
@@ -26,25 +31,12 @@ return [
             'name' => 'advanced-backend',
         ],
         'log' => [
+          'traceLevel' => YII_DEBUG ? 3 : 0,
           'targets' => [
             [
-              'class' => 'yii\log\FileTarget',
-              // 'levels' => ['warning','error'],
-              'categories' => ['yii\web\*'],
-              'except' => ['yii\web\aplication::handleRequest/logs'],
-              'logVars' => ['_GET', '_POST'],
-              'logFile' => '@runtime/logs/test.log',
-            ],
-            [
-              'class' => 'yii\log\DbTarget',
-              'logVars' => ['_GET', '_POST'],
-              'except' => ['@web/js/*'],  
-              'categories' => ['yii\web\Application::handleRequest'],
-              'prefix' => function ($message) {
-                $uid = !empty(YII::$app->user->id) ? YII::$app->user->id : 1;
-                return "{$uid}";
-              },
-            ],
+              'class' => \yii\log\FileTarget::class,
+              'levels' => ['error', 'warning'],
+            ]
           ],
         ],
         'errorHandler' => [
