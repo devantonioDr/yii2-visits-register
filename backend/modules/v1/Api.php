@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\modules\v1;
+namespace backend\modules\v1;
 
 
 class Api extends \yii\base\Module
@@ -8,7 +8,7 @@ class Api extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'frontend\modules\v1\controllers';
+    public $controllerNamespace = 'backend\modules\v1\controllers';
 
     /**
      * @inheritdoc

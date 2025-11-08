@@ -1,11 +1,10 @@
 <?php
 
-namespace frontend\modules\v1\controllers;
+namespace backend\modules\v1\controllers;
 
 use common\models\Event;
 use Yii;
 use yii\web\BadRequestHttpException;
-use yii\web\Response;
 
 /**
  * Event Controller
