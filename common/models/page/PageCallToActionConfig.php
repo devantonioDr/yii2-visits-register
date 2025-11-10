@@ -30,15 +30,15 @@ class PageCallToActionConfig extends ActiveRecord
         return '{{%page_call_to_action}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::class,
+    //     ];
+    // }
 
     /**
      * {@inheritdoc}
