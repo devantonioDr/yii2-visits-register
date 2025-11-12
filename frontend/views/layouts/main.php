@@ -187,6 +187,8 @@ $this->params['analytics_config'] = $analytics_config;
 
 
     <?php if ($gtag_id): ?>
+        <!-- Google tag (gtag.js) with Consent Mode -->
+        <!-- Step 1: Configure Consent Mode BEFORE loading gtag.js -->
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -204,9 +206,20 @@ $this->params['analytics_config'] = $analytics_config;
             });
         </script>
 
-        <!-- Google tag (gtag.js) with Consent Mode -->
+        <!-- Step 2: Load gtag.js -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
 
+        <!-- Step 3: Initialize Google Tag -->
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', '<?php echo MyHelpers::e($gtag_id); ?>');
+        </script>
         <!-- End Google tag (gtag.js) -->
     <?php endif; ?>
 
