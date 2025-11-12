@@ -184,26 +184,55 @@ $this->params['analytics_config'] = $analytics_config;
     <?= Html::csrfMetaTags() ?>
     <title><?php echo MyHelpers::e($site_config['title']); ?></title>
 
+
+
     <?php if ($gtag_id): ?>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '<?php echo MyHelpers::e($gtag_id); ?>');
-    </script>
-    <!-- End Google tag (gtag.js) -->
+        <!-- Google tag (gtag.js) with Consent Mode -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            // Configure Consent Mode (must be before gtag config)
+            gtag('consent', 'default', {
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted',
+                'functionality_storage': 'granted',
+                'personalization_storage': 'granted',
+                'security_storage': 'granted'
+            });
+
+            // Initialize Google Tag
+            gtag('js', new Date());
+            gtag('config', '<?php echo MyHelpers::e($gtag_id); ?>');
+        </script>
+        <!-- End Google tag (gtag.js) -->
     <?php endif; ?>
 
+
+
     <?php if ($gtm_id): ?>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','<?php echo MyHelpers::e($gtm_id); ?>');</script>
-    <!-- End Google Tag Manager -->
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '<?php echo MyHelpers::e($gtm_id); ?>');
+        </script>
+        <!-- End Google Tag Manager -->
     <?php endif; ?>
 
     <!-- Bootstrap 5 CSS -->
@@ -225,16 +254,16 @@ $this->params['analytics_config'] = $analytics_config;
     <style>
         <?php echo MyHelpers::getCSSColors($brand_colors); ?>
     </style>
-    
+
     <?php $this->head() ?>
 </head>
 
 <body>
     <?php if ($gtm_id): ?>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo MyHelpers::e($gtm_id); ?>"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo MyHelpers::e($gtm_id); ?>"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
     <?php endif; ?>
     <?php $this->beginBody() ?>
 
@@ -248,7 +277,7 @@ $this->params['analytics_config'] = $analytics_config;
 
     <!-- Analytics Tracking Module -->
     <script src="<?= Url::to('@web/js/tracking.js') ?>"></script>
-    
+
     <!-- Initialize AOS and Smooth Scroll -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -279,14 +308,14 @@ $this->params['analytics_config'] = $analytics_config;
             });
 
             console.log('✅ Landing page loaded successfully (PHP version)');
-            
+
             // ========================================
             // Initialize Analytics Tracking
             // ========================================
             if (typeof AnalyticsTracker !== 'undefined') {
                 // Get configuration from PHP
                 const analyticsConfig = <?php echo json_encode($analytics_config); ?>;
-                
+
                 // Create tracker instance
                 window.tracker = new AnalyticsTracker({
                     enabled: analyticsConfig.enabled,
@@ -296,10 +325,10 @@ $this->params['analytics_config'] = $analytics_config;
                     trackCTAClicks: analyticsConfig.track_cta_clicks,
                     ctaButtons: analyticsConfig.cta_buttons
                 });
-                
+
                 // Initialize tracking
                 window.tracker.init();
-                
+
                 console.log('✅ Analytics tracker ready');
             } else {
                 console.warn('⚠️ Analytics tracker not loaded');
@@ -308,13 +337,13 @@ $this->params['analytics_config'] = $analytics_config;
     </script>
 
     <?php if (!empty($customScripts)): ?>
-    <!-- Custom Scripts -->
-    <?php foreach ($customScripts as $script): ?>
-    <!-- Custom Script: <?php echo Html::encode($script->label); ?> -->
-    <?php echo $script->script; ?>
-    <!-- End Custom Script: <?php echo Html::encode($script->label); ?> -->
-    <?php endforeach; ?>
-    <!-- End Custom Scripts -->
+        <!-- Custom Scripts -->
+        <?php foreach ($customScripts as $script): ?>
+            <!-- Custom Script: <?php echo Html::encode($script->label); ?> -->
+            <?php echo $script->script; ?>
+            <!-- End Custom Script: <?php echo Html::encode($script->label); ?> -->
+        <?php endforeach; ?>
+        <!-- End Custom Scripts -->
     <?php endif; ?>
 
     <?php $this->endBody() ?>
@@ -322,4 +351,3 @@ $this->params['analytics_config'] = $analytics_config;
 
 </html>
 <?php $this->endPage() ?>
-
