@@ -369,44 +369,6 @@ $social_links = !empty($socialLinksData) ? array_map(function($social) {
     </div>
 </section>
 
-<!-- Services Preview -->
-<section class="services-preview py-5 bg-light">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-12 mb-5">
-                <span class="section-badge">Services</span>
-                <h2 class="section-title">What We Do Best</h2>
-            </div>
-        </div>
-        <div class="row g-4">
-            <?php foreach ($services as $service): ?>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="<?php echo MyHelpers::e($service['delay']); ?>">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="<?php echo MyHelpers::e($service['icon']); ?>"></i>
-                        </div>
-                        <h3 class="service-title"><?php echo MyHelpers::e($service['title']); ?></h3>
-                        <p class="service-description"><?php echo MyHelpers::e($service['description']); ?></p>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Call to Action -->
-        <div class="row mt-5">
-            <div class="col-12 text-center">
-                <a href="<?php echo MyHelpers::e($call_to_action['link']); ?>"
-                    id="cta-services-section"
-                    class="btn btn-cta"
-                    data-aos="fade-up"
-                    target="<?php echo MyHelpers::e($call_to_action['target']); ?>">
-                    <?php echo MyHelpers::e($call_to_action['text']); ?>
-                    <i class="<?php echo MyHelpers::e($call_to_action['icon']); ?> ms-2"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Footer -->
 <footer class="footer">
