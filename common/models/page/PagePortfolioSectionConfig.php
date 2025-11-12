@@ -28,15 +28,15 @@ class PagePortfolioSectionConfig extends ActiveRecord
         return '{{%page_portfolio_section}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::class,
+    //     ];
+    // }
 
     /**
      * {@inheritdoc}

@@ -28,15 +28,15 @@ class PageServiceConfig extends ActiveRecord
         return '{{%page_services}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::class,
+    //     ];
+    // }
 
     /**
      * {@inheritdoc}

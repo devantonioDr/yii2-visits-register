@@ -27,15 +27,15 @@ class PageSocialLinkConfig extends ActiveRecord
         return '{{%page_social_links}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        ];
-    }
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::class,
+    //     ];
+    // }
 
     /**
      * {@inheritdoc}
