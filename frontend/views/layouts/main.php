@@ -187,8 +187,6 @@ $this->params['analytics_config'] = $analytics_config;
 
 
     <?php if ($gtag_id): ?>
-        <!-- Google tag (gtag.js) with Consent Mode -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -196,7 +194,7 @@ $this->params['analytics_config'] = $analytics_config;
                 dataLayer.push(arguments);
             }
 
-            // Configure Consent Mode (must be before gtag config)
+            // Consent Mode — permite etiquetas por defecto
             gtag('consent', 'default', {
                 'ad_storage': 'granted',
                 'analytics_storage': 'granted',
@@ -204,11 +202,11 @@ $this->params['analytics_config'] = $analytics_config;
                 'personalization_storage': 'granted',
                 'security_storage': 'granted'
             });
-
-            // Initialize Google Tag
-            gtag('js', new Date());
-            gtag('config', '<?php echo MyHelpers::e($gtag_id); ?>');
         </script>
+
+        <!-- Google tag (gtag.js) with Consent Mode -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
+
         <!-- End Google tag (gtag.js) -->
     <?php endif; ?>
 
