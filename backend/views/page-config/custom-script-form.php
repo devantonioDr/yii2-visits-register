@@ -18,28 +18,28 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">
             <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
         </div>
+        
         <div class="box-body">
+            <?php $form = ActiveForm::begin([
+                'id' => 'custom-script-form',
+                'options' => ['class' => 'config-form'],
+            ]); ?>
             <div class="alert alert-info">
                 <i class="fa fa-info-circle"></i> 
                 <strong>Note:</strong> Enter the script code that will be inserted in the <code>&lt;head&gt;</code> section of all pages. 
                 Only enabled scripts will be included.
             </div>
 
-            <?php $form = ActiveForm::begin([
-                'id' => 'custom-script-form',
-                'options' => ['class' => 'config-form'],
-            ]); ?>
-
             <?= $form->field($model, 'label')->textInput(['maxlength' => 255])->hint('A descriptive name for this script (e.g., "Facebook Pixel", "Custom Analytics", etc.)') ?>
 
-            <?= $form->field($model, 'script')->textarea([
-                'rows' => 15,
-                'placeholder' => '<script>
-  // Your script code here
-  console.log("Custom script loaded");
-</script>'
-            ])->hint('Enter the complete script code including <script> tags if needed') ?>
 
+            <?= $form->field($model, 'script')->textarea([
+                'rows' => 5,
+                'placeholder' => '// Your script code here',
+                'style' => 'font-family: monospace; font-size: 12px;'
+            ]) ?>
+
+           
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'enabled')->checkbox([
@@ -58,12 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::activeHiddenInput($model, 'id') ?>
             <?php endif; ?>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 20px;">
                 <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-lg',
+                    'style' => 'margin-right: 10px;'
                 ]) ?>
                 <?= Html::a('Cancel', ['custom-scripts'], [
-                    'class' => 'btn btn-default'
+                    'class' => 'btn btn-default btn-lg'
                 ]) ?>
             </div>
 
@@ -71,4 +72,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
