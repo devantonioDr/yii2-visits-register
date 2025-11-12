@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <div class="alert alert-info">
                 <i class="fa fa-info-circle"></i> 
-                <strong>Instrucciones:</strong> Ingrese su ID de Google Tag Manager (formato: GTM-XXXXXXX). 
-                El código se insertará automáticamente en todas las páginas del sitio.
+                <strong>Instrucciones:</strong> Configure Google Tag Manager y/o Google Tag (gtag.js). 
+                Los códigos se insertarán automáticamente en todas las páginas del sitio.
             </div>
 
             <?php $form = ActiveForm::begin([
@@ -29,35 +29,77 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'config-form'],
             ]); ?>
 
-            <?= $form->field($model, 'gtm_id')->textInput([
-                'maxlength' => true,
-                'placeholder' => 'GTM-53MMVHXG',
-                'pattern' => 'GTM-[A-Z0-9]+',
-            ])->hint('Formato: GTM-XXXXXXX (ejemplo: GTM-53MMVHXG)') ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Google Tag Manager (GTM)</h3>
+                        </div>
+                        <div class="box-body">
+                            <?= $form->field($model, 'gtm_id')->textInput([
+                                'maxlength' => true,
+                                'placeholder' => 'GTM-53MMVHXG',
+                                'pattern' => 'GTM-[A-Z0-9]+',
+                            ])->hint('Formato: GTM-XXXXXXX (ejemplo: GTM-53MMVHXG)') ?>
 
-            <?= $form->field($model, 'enabled')->checkbox([
-                'label' => 'Habilitar Google Tag Manager',
-            ])->hint('Marque esta opción para activar Google Tag Manager en el sitio') ?>
+                            <?= $form->field($model, 'enabled')->checkbox([
+                                'label' => 'Habilitar Google Tag Manager',
+                            ])->hint('Marque esta opción para activar Google Tag Manager en el sitio') ?>
 
-            <div class="form-group">
+                            <?php if ($model->isActive()): ?>
+                                <div class="alert alert-success mt-2">
+                                    <i class="fa fa-check-circle"></i> 
+                                    <strong>Google Tag Manager está activo</strong><br>
+                                    ID: <code><?= Html::encode($model->gtm_id) ?></code>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-warning mt-2">
+                                    <i class="fa fa-exclamation-triangle"></i> 
+                                    <strong>Google Tag Manager está desactivado</strong>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Google Tag (gtag.js)</h3>
+                        </div>
+                        <div class="box-body">
+                            <?= $form->field($model, 'gtag_id')->textInput([
+                                'maxlength' => true,
+                                'placeholder' => 'AW-16791212959 o G-XXXXXXXXXX',
+                                'pattern' => '(AW|G)-[A-Z0-9]+',
+                            ])->hint('Formato: AW-XXXXXXX (Google Ads) o G-XXXXXXXXXX (Google Analytics 4)') ?>
+
+                            <?= $form->field($model, 'gtag_enabled')->checkbox([
+                                'label' => 'Habilitar Google Tag',
+                            ])->hint('Marque esta opción para activar Google Tag (gtag.js) en el sitio') ?>
+
+                            <?php if ($model->isGtagActive()): ?>
+                                <div class="alert alert-success mt-2">
+                                    <i class="fa fa-check-circle"></i> 
+                                    <strong>Google Tag está activo</strong><br>
+                                    ID: <code><?= Html::encode($model->gtag_id) ?></code>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-warning mt-2">
+                                    <i class="fa fa-exclamation-triangle"></i> 
+                                    <strong>Google Tag está desactivado</strong>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
                 <?= Html::submitButton('Guardar Configuración', ['class' => 'btn btn-primary']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
-
-            <?php if ($model->isActive()): ?>
-                <div class="alert alert-success mt-3">
-                    <i class="fa fa-check-circle"></i> 
-                    <strong>Google Tag Manager está activo</strong><br>
-                    ID: <code><?= Html::encode($model->gtm_id) ?></code>
-                </div>
-            <?php else: ?>
-                <div class="alert alert-warning mt-3">
-                    <i class="fa fa-exclamation-triangle"></i> 
-                    <strong>Google Tag Manager está desactivado</strong><br>
-                    Configure el ID y habilite la opción para activarlo.
-                </div>
-            <?php endif; ?>
         </div>
     </div>
 </div>

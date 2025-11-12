@@ -148,10 +148,11 @@ $analytics_config = Yii::$app->params['analytics'] ?? [
 ];
 
 // ========================================
-// GOOGLE TAG MANAGER CONFIGURATION
+// GOOGLE TAG MANAGER & GOOGLE TAG CONFIGURATION
 // ========================================
 $gtmConfig = PageGoogleTagManagerConfig::getConfig();
 $gtm_id = ($gtmConfig && $gtmConfig->isActive()) ? $gtmConfig->gtm_id : null;
+$gtag_id = ($gtmConfig && $gtmConfig->isGtagActive()) ? $gtmConfig->gtag_id : null;
 
 
 
@@ -176,6 +177,18 @@ $this->params['analytics_config'] = $analytics_config;
     <meta name="description" content="<?php echo MyHelpers::e($site_config['description']); ?>">
     <?= Html::csrfMetaTags() ?>
     <title><?php echo MyHelpers::e($site_config['title']); ?></title>
+
+    <?php if ($gtag_id): ?>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo MyHelpers::e($gtag_id); ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<?php echo MyHelpers::e($gtag_id); ?>');
+    </script>
+    <!-- End Google tag (gtag.js) -->
+    <?php endif; ?>
 
     <?php if ($gtm_id): ?>
     <!-- Google Tag Manager -->
