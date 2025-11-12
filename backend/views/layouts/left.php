@@ -53,11 +53,6 @@
                 'icon' => 'circle-o',
               ],
               [
-                'label' => 'Services',
-                'url' => ['/page-config/services'],
-                'icon' => 'circle-o',
-              ],
-              [
                 'label' => 'Footer Content',
                 'url' => ['/page-config/footer-content'],
                 'icon' => 'circle-o',
@@ -65,6 +60,11 @@
               [
                 'label' => 'Social Links',
                 'url' => ['/page-config/social-links'],
+                'icon' => 'circle-o',
+              ],
+              [
+                'label' => 'Google Tag Manager',
+                'url' => ['/page-config/google-tag-manager'],
                 'icon' => 'circle-o',
               ],
             ],

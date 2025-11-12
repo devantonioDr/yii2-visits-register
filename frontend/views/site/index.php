@@ -56,7 +56,7 @@ $portfolio_section = [
     'badge' => $portfolioConfig ? ($portfolioConfig->badge ?? 'Our Work') : 'Our Work',
     'title' => $portfolioConfig ? ($portfolioConfig->title ?? 'PORTFOLIO') : 'PORTFOLIO',
     'description' => $portfolioConfig ? ($portfolioConfig->description ?? 'Explore our portfolio featuring precision fades, tailored beard work, and creative design cuts crafted for every client.') : 'Explore our portfolio featuring precision fades, tailored beard work, and creative design cuts crafted for every client.',
-    'images' => !empty($portfolioImages) ? array_map(function($img) {
+    'images' => !empty($portfolioImages) ? array_map(function ($img) {
         return [
             'url' => $img->url,
             'alt' => $img->alt ?? '',
@@ -109,7 +109,7 @@ $about_section = [
     'description' => $aboutConfig ? ($aboutConfig->description ?? 'With over 10 years of experience, we offer the best cuts and barbershop services. Our team of professionals is dedicated to bringing you the best style that suits your personality.') : 'With over 10 years of experience, we offer the best cuts and barbershop services. Our team of professionals is dedicated to bringing you the best style that suits your personality.',
     'image_url' => $aboutConfig ? ($aboutConfig->image_url ?? 'images/background1.jpeg') : 'images/background1.jpeg',
     'image_alt' => $aboutConfig ? ($aboutConfig->image_alt ?? 'About Us') : 'About Us',
-    'features' => !empty($aboutFeatures) ? array_map(function($feature) {
+    'features' => !empty($aboutFeatures) ? array_map(function ($feature) {
         return [
             'icon' => $feature->icon ?? 'fas fa-check-circle',
             'text' => $feature->text ?? ''
@@ -132,7 +132,7 @@ $about_section = [
 
 // Services
 $servicesData = PageServiceConfig::getAllOrdered();
-$services = !empty($servicesData) ? array_map(function($service) {
+$services = !empty($servicesData) ? array_map(function ($service) {
     return [
         'icon' => $service->icon ?? 'fas fa-cut',
         'title' => $service->title ?? '',
@@ -188,7 +188,7 @@ $footer_content = $footerConfig ? [
 
 // Social Links
 $socialLinksData = PageSocialLinkConfig::getAllOrdered();
-$social_links = !empty($socialLinksData) ? array_map(function($social) {
+$social_links = !empty($socialLinksData) ? array_map(function ($social) {
     return [
         'platform' => $social->platform ?? '',
         'url' => $social->url ?? '',

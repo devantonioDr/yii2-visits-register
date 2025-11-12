@@ -105,20 +105,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">
-                        <i class="fa fa-wrench"></i> Services
-                    </h3>
-                </div>
-                <div class="box-body">
-                    <p>Manage services list.</p>
-                    <?= Html::a('Manage', ['services'], ['class' => 'btn btn-primary']) ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">
                         <i class="fa fa-footer"></i> Footer Content
                     </h3>
                 </div>
@@ -139,6 +125,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="box-body">
                     <p>Manage social media links.</p>
                     <?= Html::a('Manage', ['social-links'], ['class' => 'btn btn-primary']) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-tag"></i> Google Tag Manager
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <p>Configure Google Tag Manager integration.</p>
+                    <?= Html::a('Manage', ['google-tag-manager'], ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>
         </div>

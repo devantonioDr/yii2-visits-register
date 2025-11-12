@@ -7,10 +7,10 @@ use common\models\page\PageAboutSectionImageConfig;
 use common\models\page\PageBrandColorsConfig;
 use common\models\page\PageCallToActionConfig;
 use common\models\page\PageFooterContentConfig;
+use common\models\page\PageGoogleTagManagerConfig;
 use common\models\page\PageHeroSectionConfig;
 use common\models\page\PagePortfolioImageConfig;
 use common\models\page\PagePortfolioSectionConfig;
-use common\models\page\PageServiceConfig;
 use common\models\page\PageSiteConfig;
 use common\models\page\PageSocialLinkConfig;
 use Yii;
@@ -43,14 +43,11 @@ class PageConfigController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'update-service' => ['get', 'post'],
                     'update-social-link' => ['get', 'post'],
                     'update-portfolio-image' => ['get', 'post'],
                     'update-about-section-image' => ['post'],
                     'create-portfolio-image' => ['get', 'post'],
-                    'create-service' => ['get', 'post'],
                     'create-social-link' => ['get', 'post'],
-                    'delete-service' => ['post'],
                     'delete-social-link' => ['post'],
                     'delete-portfolio-image' => ['post'],
                     'delete-about-section-image' => ['post'],
@@ -191,24 +188,6 @@ class PageConfigController extends Controller
     }
 
     /**
-     * Services page
-     * @return string|\yii\web\Response
-     */
-    public function actionServices()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => PageServiceConfig::find()->orderBy(['sort_order' => SORT_ASC]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-
-        return $this->render('services', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Footer Content page
      * @return string|\yii\web\Response
      */
@@ -245,57 +224,21 @@ class PageConfigController extends Controller
     }
 
     /**
-     * Create service
+     * Google Tag Manager page
      * @return string|\yii\web\Response
      */
-    public function actionCreateService()
+    public function actionGoogleTagManager()
     {
-        $model = new PageServiceConfig();
+        $model = PageGoogleTagManagerConfig::getConfig() ?: new PageGoogleTagManagerConfig();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Service created successfully');
-            return $this->redirect(['services']);
+            Yii::$app->session->setFlash('success', 'Google Tag Manager configuration saved successfully');
+            return $this->refresh();
         }
 
-        return $this->render('service-form', [
+        return $this->render('google-tag-manager', [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * Update service
-     * @param int $id
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
-     */
-    public function actionUpdateService($id)
-    {
-        $model = $this->findServiceModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Service updated successfully');
-            return $this->redirect(['services']);
-        }
-
-        return $this->render('service-form', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Finds the PageServiceConfig model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return PageServiceConfig the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findServiceModel($id)
-    {
-        if (($model = PageServiceConfig::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested service does not exist.');
     }
 
     /**
@@ -456,23 +399,6 @@ class PageConfigController extends Controller
         }
 
         return $this->redirect(['about-section']);
-    }
-
-    /**
-     * Delete service
-     * @param int $id
-     * @return \yii\web\Response
-     */
-    public function actionDeleteService($id)
-    {
-        $model = PageServiceConfig::findOne($id);
-        if ($model && $model->delete()) {
-            Yii::$app->session->setFlash('success', 'Service deleted successfully');
-        } else {
-            Yii::$app->session->setFlash('error', 'Error deleting service');
-        }
-
-        return $this->redirect(['services']);
     }
 
     /**
