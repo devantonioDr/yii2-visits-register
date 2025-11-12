@@ -7,6 +7,7 @@ use common\components\MyHelpers;
 use common\models\page\PageSiteConfig;
 use common\models\page\PageBrandColorsConfig;
 use common\models\page\PageGoogleTagManagerConfig;
+use common\models\page\PageCustomScriptConfig;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -154,6 +155,11 @@ $gtmConfig = PageGoogleTagManagerConfig::getConfig();
 $gtm_id = ($gtmConfig && $gtmConfig->isActive()) ? $gtmConfig->gtm_id : null;
 $gtag_id = ($gtmConfig && $gtmConfig->isGtagActive()) ? $gtmConfig->gtag_id : null;
 
+// ========================================
+// CUSTOM SCRIPTS CONFIGURATION
+// ========================================
+$customScripts = PageCustomScriptConfig::getEnabledScripts();
+
 
 
 // ========================================
@@ -198,6 +204,16 @@ $this->params['analytics_config'] = $analytics_config;
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','<?php echo MyHelpers::e($gtm_id); ?>');</script>
     <!-- End Google Tag Manager -->
+    <?php endif; ?>
+
+    <?php if (!empty($customScripts)): ?>
+    <!-- Custom Scripts -->
+    <?php foreach ($customScripts as $script): ?>
+    <!-- Custom Script: <?php echo Html::encode($script->label); ?> -->
+    <?php echo $script->script; ?>
+    <!-- End Custom Script: <?php echo Html::encode($script->label); ?> -->
+    <?php endforeach; ?>
+    <!-- End Custom Scripts -->
     <?php endif; ?>
 
     <!-- Bootstrap 5 CSS -->

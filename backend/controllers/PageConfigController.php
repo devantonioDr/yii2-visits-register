@@ -13,6 +13,7 @@ use common\models\page\PagePortfolioImageConfig;
 use common\models\page\PagePortfolioSectionConfig;
 use common\models\page\PageSiteConfig;
 use common\models\page\PageSocialLinkConfig;
+use common\models\page\PageCustomScriptConfig;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -48,7 +49,10 @@ class PageConfigController extends Controller
                     'update-about-section-image' => ['post'],
                     'create-portfolio-image' => ['get', 'post'],
                     'create-social-link' => ['get', 'post'],
+                    'create-custom-script' => ['get', 'post'],
+                    'update-custom-script' => ['get', 'post'],
                     'delete-social-link' => ['post'],
+                    'delete-custom-script' => ['post'],
                     'delete-portfolio-image' => ['post'],
                     'delete-about-section-image' => ['post'],
                     'upload-image' => ['post'],
@@ -238,6 +242,24 @@ class PageConfigController extends Controller
 
         return $this->render('google-tag-manager', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * Custom Scripts page
+     * @return string
+     */
+    public function actionCustomScripts()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => PageCustomScriptConfig::find()->orderBy(['sort_order' => SORT_ASC]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('custom-scripts', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -450,6 +472,77 @@ class PageConfigController extends Controller
         }
 
         return $this->redirect(['about-section']);
+    }
+
+    /**
+     * Create custom script
+     * @return string|\yii\web\Response
+     */
+    public function actionCreateCustomScript()
+    {
+        $model = new PageCustomScriptConfig();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Custom script created successfully');
+            return $this->redirect(['custom-scripts']);
+        }
+
+        return $this->render('custom-script-form', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Update custom script
+     * @param int $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionUpdateCustomScript($id)
+    {
+        $model = $this->findCustomScriptModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Custom script updated successfully');
+            return $this->redirect(['custom-scripts']);
+        }
+
+        return $this->render('custom-script-form', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Finds the PageCustomScriptConfig model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id
+     * @return PageCustomScriptConfig the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findCustomScriptModel($id)
+    {
+        if (($model = PageCustomScriptConfig::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested custom script does not exist.');
+    }
+
+    /**
+     * Delete custom script
+     * @param int $id
+     * @return \yii\web\Response
+     */
+    public function actionDeleteCustomScript($id)
+    {
+        $model = PageCustomScriptConfig::findOne($id);
+        if ($model && $model->delete()) {
+            Yii::$app->session->setFlash('success', 'Custom script deleted successfully');
+        } else {
+            Yii::$app->session->setFlash('error', 'Error deleting custom script');
+        }
+
+        return $this->redirect(['custom-scripts']);
     }
 
     /**

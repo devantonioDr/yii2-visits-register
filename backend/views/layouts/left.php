@@ -67,6 +67,11 @@
                 'url' => ['/page-config/google-tag-manager'],
                 'icon' => 'circle-o',
               ],
+              [
+                'label' => 'Custom Scripts',
+                'url' => ['/page-config/custom-scripts'],
+                'icon' => 'circle-o',
+              ],
             ],
           ],
         ]

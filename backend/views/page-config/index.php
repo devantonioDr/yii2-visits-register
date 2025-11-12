@@ -142,5 +142,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-code"></i> Custom Scripts
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <p>Manage custom scripts to add to pages.</p>
+                    <?= Html::a('Manage', ['custom-scripts'], ['class' => 'btn btn-primary']) ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
