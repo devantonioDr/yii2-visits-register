@@ -214,6 +214,24 @@ $social_links = !empty($socialLinksData) ? array_map(function ($social) {
 
 ?>
 
+<!-- Social Media Top Bar -->
+<div class="social-topbar">
+    <div class="container">
+        <div class="topbar-content">
+            <div class="topbar-social">
+                <?php foreach ($social_links as $social): ?>
+                    <a href="<?php echo MyHelpers::e($social['url']); ?>"
+                        target="_blank"
+                        class="topbar-social-link"
+                        aria-label="<?php echo ucfirst(MyHelpers::e($social['platform'])); ?>">
+                        <i class="<?php echo MyHelpers::e($social['icon']); ?>"></i>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Hero Section -->
 <section id="hero" class="hero-section">
     <!-- Media Background -->
