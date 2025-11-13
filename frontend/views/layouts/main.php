@@ -259,7 +259,7 @@ $this->params['analytics_config'] = $analytics_config;
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= Url::to('@web/css/styles.css') ?>">
+    <link rel="stylesheet" href="<?= Url::to('@web/css/styles.css?v=1.0') ?>">
 
     <!-- Dynamic CSS Colors -->
     <style>

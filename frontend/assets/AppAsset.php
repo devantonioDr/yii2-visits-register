@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle
     
     public $css = [
         'css/site.css?v=1.0',
+        'css/styles.css?v=1.0',
         'css/google-fonts.css',
         'css/ionicons/css/ionicons.css',
     ];
